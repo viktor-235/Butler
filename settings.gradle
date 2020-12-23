@@ -1,0 +1,3 @@
+rootProject.name = 'butler'
+include 'butler-core'
+include 'butler-cli'

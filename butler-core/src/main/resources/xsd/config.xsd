@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            targetNamespace="http://github.com/viktor235/butler/config"
+            xmlns="http://github.com/viktor235/butler/config">
+    <xsd:element name="config">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element ref="jobs"/>
+            </xsd:sequence>
+            <xsd:attribute name="name" type="xsd:string"/>
+            <xsd:attribute name="description" type="xsd:string"/>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="jobs">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="job" type="jobType" maxOccurs='unbounded'/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:complexType name="jobType" abstract="true"/>
+</xsd:schema>

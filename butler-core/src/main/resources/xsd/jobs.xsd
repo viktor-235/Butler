@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            targetNamespace="http://github.com/viktor235/butler/config/jobs"
+            xmlns="http://github.com/viktor235/butler/config/jobs"
+            xmlns:c="http://github.com/viktor235/butler/config">
+    <xsd:import schemaLocation="config.xsd" namespace="http://github.com/viktor235/butler/config"/>
+    <!--    <xsd:import namespace="http://github.com/viktor235/butler/config"/>-->
+
+    <!-- Text loading -->
+
+    <xsd:complexType name="loadTextFromFile">
+        <xsd:complexContent>
+            <xsd:extension base="c:jobType">
+                <xsd:attribute name="contextTo" type="xsd:string" default="TEXT"/>
+                <xsd:attribute name="file" type="xsd:string" use="required"/>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+
+    <!-- Text modification -->
+
+    <xsd:complexType name="replaceTextUsingRegEx">
+        <xsd:complexContent>
+            <xsd:extension base="c:jobType">
+                <xsd:sequence>
+                    <xsd:element name="flags" minOccurs="0">
+                        <xsd:complexType>
+                            <xsd:attribute name="unixLines" type="xsd:boolean" default="false"/>
+                            <xsd:attribute name="caseInsensitive" type="xsd:boolean" default="false"/>
+                            <xsd:attribute name="comments" type="xsd:boolean" default="false"/>
+                            <xsd:attribute name="multiline" type="xsd:boolean" default="false"/>
+                            <xsd:attribute name="literal" type="xsd:boolean" default="false"/>
+                            <xsd:attribute name="dotall" type="xsd:boolean" default="false"/>
+                            <xsd:attribute name="unicodeCase" type="xsd:boolean" default="false"/>
+                            <xsd:attribute name="canonEq" type="xsd:boolean" default="false"/>
+                            <xsd:attribute name="unicodeCharacterClass" type="xsd:boolean" default="false"/>
+                        </xsd:complexType>
+                    </xsd:element>
+                    <xsd:element name="regEx" type="xsd:string"/>
+                    <xsd:element name="substitution" type="xsd:string"/>
+                </xsd:sequence>
+                <xsd:attribute name="contextFrom" type="xsd:string" default="TEXT"/>
+                <xsd:attribute name="contextTo" type="xsd:string" default="TEXT"/>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="insertToText">
+        <xsd:complexContent>
+            <xsd:extension base="c:jobType">
+                <xsd:sequence>
+                    <xsd:element name="beginningValue" type="xsd:string" minOccurs="0"/>
+                    <xsd:element name="endingValue" type="xsd:string" minOccurs="0"/>
+                </xsd:sequence>
+                <xsd:attribute name="contextFrom" type="xsd:string" default="TEXT"/>
+                <xsd:attribute name="contextTo" type="xsd:string" default="TEXT"/>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+
+    <!-- Text saving -->
+
+    <xsd:complexType name="writeTextToConsole">
+        <xsd:complexContent>
+            <xsd:extension base="c:jobType">
+                <xsd:attribute name="contextFrom" type="xsd:string" default="TEXT"/>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="writeTextToFile">
+        <xsd:complexContent>
+            <xsd:extension base="c:jobType">
+                <xsd:attribute name="contextFrom" type="xsd:string" default="TEXT"/>
+                <xsd:attribute name="file" type="xsd:string" use="required"/>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+</xsd:schema>

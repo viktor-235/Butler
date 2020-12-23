@@ -1,0 +1,51 @@
+configurations {
+    xsd2java
+}
+
+dependencies {
+    // JAX-B dependencies for JDK 9+
+    api "org.glassfish.jaxb:jaxb-runtime:2.3.2"
+    api "com.sun.xml.bind:jaxb-xjc:2.3.2"
+    api "com.sun.xml.bind:jaxb-impl:2.3.2"
+
+    api group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.13.1'
+    api group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.13.1'
+
+    api 'org.apache.commons:commons-lang3:3.10'
+
+    testImplementation group: 'junit', name: 'junit', version: '4.12'
+
+    xsd2java(
+            "org.glassfish.jaxb:jaxb-xjc:2.3.2"
+    )
+}
+
+sourceSets.main.java.srcDirs "src/generated/java"
+System.setProperty('javax.xml.accessExternalSchema', 'all')
+
+project.ext {
+    jaxbTargetDir = file("src/generated/java")
+}
+
+task xsd2java() {
+    doLast {
+        jaxbTargetDir.mkdirs()
+
+        ant.taskdef(name: 'xjc',
+                classname: 'com.sun.tools.xjc.XJCTask',
+                classpath: configurations.xsd2java.asPath)
+        ant.jaxbTargetDir = jaxbTargetDir
+
+        ant.xjc(
+                destdir: '${jaxbTargetDir}',
+                schema: 'src/main/resources/xsd/config.xsd',
+                removeOldOutput: 'yes'
+        )
+        ant.xjc(
+                destdir: '${jaxbTargetDir}',
+                schema: 'src/main/resources/xsd/jobs.xsd',
+                removeOldOutput: 'yes'
+        )
+    }
+}
+compileJava.dependsOn xsd2java

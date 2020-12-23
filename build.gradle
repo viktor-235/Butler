@@ -1,0 +1,18 @@
+group 'com.github.viktor235'
+version '1.0-SNAPSHOT'
+
+subprojects {
+    apply plugin: "java-library"
+
+    group rootProject.group
+    version rootProject.version
+
+    tasks.withType(JavaCompile) {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
+
+    repositories {
+        mavenCentral()
+    }
+}
