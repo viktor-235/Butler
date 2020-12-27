@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-            targetNamespace="http://github.com/viktor235/butler/config/jobs"
-            xmlns="http://github.com/viktor235/butler/config/jobs"
-            xmlns:c="http://github.com/viktor235/butler/config">
-    <xsd:import schemaLocation="config.xsd" namespace="http://github.com/viktor235/butler/config"/>
-    <!--    <xsd:import namespace="http://github.com/viktor235/butler/config"/>-->
+            targetNamespace="http://github.com/viktor235/butler/task/jobs"
+            xmlns="http://github.com/viktor235/butler/task/jobs"
+            xmlns:t="http://github.com/viktor235/butler/task">
+    <xsd:import schemaLocation="task.xsd" namespace="http://github.com/viktor235/butler/task"/>
 
     <!-- Text loading -->
 
     <xsd:complexType name="loadTextFromFile">
         <xsd:complexContent>
-            <xsd:extension base="c:jobType">
+            <xsd:extension base="t:jobType">
                 <xsd:attribute name="contextTo" type="xsd:string" default="TEXT"/>
                 <xsd:attribute name="file" type="xsd:string" use="required"/>
             </xsd:extension>
@@ -21,7 +20,7 @@
 
     <xsd:complexType name="replaceTextUsingRegEx">
         <xsd:complexContent>
-            <xsd:extension base="c:jobType">
+            <xsd:extension base="t:jobType">
                 <xsd:sequence>
                     <xsd:element name="flags" minOccurs="0">
                         <xsd:complexType>
@@ -47,7 +46,7 @@
 
     <xsd:complexType name="insertToText">
         <xsd:complexContent>
-            <xsd:extension base="c:jobType">
+            <xsd:extension base="t:jobType">
                 <xsd:sequence>
                     <xsd:element name="beginningValue" type="xsd:string" minOccurs="0"/>
                     <xsd:element name="endingValue" type="xsd:string" minOccurs="0"/>
@@ -62,7 +61,7 @@
 
     <xsd:complexType name="writeTextToConsole">
         <xsd:complexContent>
-            <xsd:extension base="c:jobType">
+            <xsd:extension base="t:jobType">
                 <xsd:attribute name="contextFrom" type="xsd:string" default="TEXT"/>
             </xsd:extension>
         </xsd:complexContent>
@@ -70,7 +69,7 @@
 
     <xsd:complexType name="writeTextToFile">
         <xsd:complexContent>
-            <xsd:extension base="c:jobType">
+            <xsd:extension base="t:jobType">
                 <xsd:attribute name="contextFrom" type="xsd:string" default="TEXT"/>
                 <xsd:attribute name="file" type="xsd:string" use="required"/>
             </xsd:extension>

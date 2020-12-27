@@ -1,6 +1,6 @@
 package com.github.viktor235.butler.utils;
 
-import com.github.viktor235.butler.config.Config;
+import com.github.viktor235.butler.task.Task;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 
 import javax.xml.bind.JAXBContext;
@@ -41,26 +41,26 @@ public class Utils {
         }
     }
 
-    public static Config parseConfigFile(File file) throws AppException {
+    public static Task parseTaskFile(File file) throws AppException {
         try {
-            JAXBContext jaxbContext = JAXBContext.newInstance(Config.class);
+            JAXBContext jaxbContext = JAXBContext.newInstance(Task.class);
             Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
-            return (Config) unmarshaller.unmarshal(file);
+            return (Task) unmarshaller.unmarshal(file);
         } catch (JAXBException e) {
-            throw new AppException(String.format("Error while unmarshalling config file '%s'", file), e);
+            throw new AppException(String.format("Error while unmarshalling task file '%s'", file), e);
         } catch (IllegalArgumentException e) {
-            throw new AppException(String.format("Wrong config file name '%s'", file));
+            throw new AppException(String.format("Wrong task file name '%s'", file));
         }
     }
 
-    public static void saveConfigFile(Config config, File file) throws AppException {
+    public static void saveTaskFile(Task task, File file) throws AppException {
         try {
-            JAXBContext jaxbContext = JAXBContext.newInstance(Config.class);
+            JAXBContext jaxbContext = JAXBContext.newInstance(Task.class);
             Marshaller marshaller = jaxbContext.createMarshaller();
             marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-            marshaller.marshal(config, file);
+            marshaller.marshal(task, file);
         } catch (JAXBException e) {
-            throw new AppException(String.format("Error while marshalling config file '%s'", file), e);
+            throw new AppException(String.format("Error while marshalling task file '%s'", file), e);
         }
     }
 

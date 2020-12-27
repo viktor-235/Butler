@@ -2,7 +2,7 @@ package com.github.viktor235.butler.jobs;
 
 import com.github.viktor235.butler.Context;
 import com.github.viktor235.butler.Informer;
-import com.github.viktor235.butler.config.jobs.ReplaceTextUsingRegEx;
+import com.github.viktor235.butler.task.jobs.ReplaceTextUsingRegEx;
 import com.github.viktor235.butler.utils.AppException;
 
 import java.util.regex.Pattern;

@@ -2,7 +2,7 @@ package com.github.viktor235.butler.jobs;
 
 import com.github.viktor235.butler.Context;
 import com.github.viktor235.butler.Informer;
-import com.github.viktor235.butler.config.jobs.WriteTextToFile;
+import com.github.viktor235.butler.task.jobs.WriteTextToFile;
 import com.github.viktor235.butler.utils.AppException;
 import com.github.viktor235.butler.utils.Utils;
 

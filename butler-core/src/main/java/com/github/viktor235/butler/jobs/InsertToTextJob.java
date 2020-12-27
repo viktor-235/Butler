@@ -2,7 +2,7 @@ package com.github.viktor235.butler.jobs;
 
 import com.github.viktor235.butler.Context;
 import com.github.viktor235.butler.Informer;
-import com.github.viktor235.butler.config.jobs.InsertToText;
+import com.github.viktor235.butler.task.jobs.InsertToText;
 import com.github.viktor235.butler.utils.AppException;
 
 public class InsertToTextJob implements JobEntity {

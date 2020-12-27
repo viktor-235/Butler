@@ -38,7 +38,7 @@ task xsd2java() {
 
         ant.xjc(
                 destdir: '${jaxbTargetDir}',
-                schema: 'src/main/resources/xsd/config.xsd',
+                schema: 'src/main/resources/xsd/task.xsd',
                 removeOldOutput: 'yes'
         )
         ant.xjc(
@@ -50,7 +50,7 @@ task xsd2java() {
 }
 compileJava.dependsOn xsd2java
 
-// Xsd-files are part of distribution archive. This files use for config autocompletion.
+// Xsd-files are part of distribution archive. This files use for task autocompletion.
 task copyXsd(type: Copy) {
     from "src/main/resources/xsd"
     into "../xsd"

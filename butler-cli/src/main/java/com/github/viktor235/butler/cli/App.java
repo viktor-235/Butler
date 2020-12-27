@@ -1,15 +1,14 @@
 package com.github.viktor235.butler.cli;
 
 import com.github.viktor235.butler.Executor;
-import com.github.viktor235.butler.config.Config;
 import com.github.viktor235.butler.jobs.JobEntity;
 import com.github.viktor235.butler.jobs.JobFactory;
+import com.github.viktor235.butler.task.Task;
 import com.github.viktor235.butler.utils.AppException;
 import com.github.viktor235.butler.utils.Utils;
 import picocli.CommandLine;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.Callable;
 
@@ -20,13 +19,13 @@ import static org.apache.commons.lang3.StringUtils.isNotEmpty;
         mixinStandardHelpOptions = true,
         versionProvider = com.github.viktor235.butler.cli.VersionProvider.class,
         header = AsciiArt.LOGO,
-        description = "This app executes some jobs for You. Just specify the configuration file.",
+        description = "This app executes some jobs for You. Just specify the task file.",
         descriptionHeading = "%n@|bold,underline Description|@:%n",
         parameterListHeading = "%n@|bold,underline Parameters|@:%n",
         optionListHeading = "%n@|bold,underline Options|@:%n")
 public class App implements Callable<Integer> {
-    @CommandLine.Parameters(description = "The configuration XML-file. This is the plan of execution.")
-    private File configFile;
+    @CommandLine.Parameters(description = "The task XML-file. This is the plan of execution.")
+    private File taskFile;
 
     public static void main(String[] args) {
         int exitCode = new CommandLine(new App()).execute(args);
@@ -39,20 +38,20 @@ public class App implements Callable<Integer> {
 
         CliInformer informer = new CliInformer();
 
-        Config config;
+        Task task;
         try {
-            config = Utils.parseConfigFile(configFile);
+            task = Utils.parseTaskFile(taskFile);
         } catch (AppException e) {
             System.out.println(AsciiArt.FAILED);
-            informer.reportError("Error while parsing config:", e);
+            informer.reportError("Error while parsing task file:", e);
             return 1;
         }
 
-        printConfigInfo(config);
+        printTaskInfo(task);
 
         try {
             JobFactory jobFactory = new JobFactory();
-            List<JobEntity> jobs = jobFactory.createJobs(config.getJobs().getJob());
+            List<JobEntity> jobs = jobFactory.createJobs(task.getJobs().getJob());
             Executor exec = new Executor(informer);
             exec.execute(jobs);
         } catch (AppException e) {
@@ -64,13 +63,13 @@ public class App implements Callable<Integer> {
         return 0;
     }
 
-    private void printConfigInfo(Config config) {
-        String name = config.getName();
-        String desc = config.getDescription();
+    private void printTaskInfo(Task task) {
+        String name = task.getName();
+        String desc = task.getDescription();
         if (isEmpty(name) && isEmpty(desc))
             return;
         if (isNotEmpty(name)) {
-            String toPrint = CommandLine.Help.Ansi.AUTO.string("@|bold Config name:|@ " + name);
+            String toPrint = CommandLine.Help.Ansi.AUTO.string("@|bold Task name:|@ " + name);
             System.out.println(toPrint);
         }
         if (isNotEmpty(desc)) {

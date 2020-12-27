@@ -2,7 +2,7 @@ package com.github.viktor235.butler.jobs;
 
 import com.github.viktor235.butler.Context;
 import com.github.viktor235.butler.Informer;
-import com.github.viktor235.butler.config.jobs.WriteTextToConsole;
+import com.github.viktor235.butler.task.jobs.WriteTextToConsole;
 import com.github.viktor235.butler.utils.AppException;
 
 public class WriteTextToConsoleJob implements JobEntity {

@@ -2,7 +2,7 @@
 ## Custom
 ##############################
 logs/
-xsd/
+/xsd/
 butler-core/src/generated/
 
 ##############################

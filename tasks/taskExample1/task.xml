@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<cfg:config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:cfg="http://github.com/viktor235/butler/config"
-            xmlns:j="http://github.com/viktor235/butler/config/jobs"
-            xsi:schemaLocation="http://github.com/viktor235/butler/config ../../xsd/config.xsd
-            http://github.com/viktor235/butler/config/jobs ../../xsd/jobs.xsd"
-            name="Example 1" description="Example of configuration file">
-    <cfg:jobs>
+<task:task xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:task="http://github.com/viktor235/butler/task"
+            xmlns:j="http://github.com/viktor235/butler/task/jobs"
+            xsi:schemaLocation="http://github.com/viktor235/butler/task ../../xsd/task.xsd
+            http://github.com/viktor235/butler/task/jobs ../../xsd/jobs.xsd"
+            name="Example 1" description="Example of task file">
+    <task:jobs>
         <job xsi:type="j:loadTextFromFile" file="input.txt"/>
         <job xsi:type="j:replaceTextUsingRegEx">
             <regEx>(.*)=(.*)</regEx>
@@ -18,5 +18,5 @@
         </job>
         <job xsi:type="j:writeTextToFile" file="output.txt"/>
         <job xsi:type="j:writeTextToConsole"/>
-    </cfg:jobs>
-</cfg:config>
+    </task:jobs>
+</task:task>
