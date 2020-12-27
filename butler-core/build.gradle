@@ -49,3 +49,10 @@ task xsd2java() {
     }
 }
 compileJava.dependsOn xsd2java
+
+// Xsd-files are part of distribution archive. This files use for config autocompletion.
+task copyXsd(type: Copy) {
+    from "src/main/resources/xsd"
+    into "../xsd"
+}
+xsd2java.finalizedBy copyXsd

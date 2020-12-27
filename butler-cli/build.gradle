@@ -1,3 +1,7 @@
+plugins {
+    id 'distribution'
+}
+
 dependencies {
     compile project(":butler-core")
     compile 'info.picocli:picocli:4.2.0'
@@ -16,12 +20,25 @@ jar {
 }
 
 task fatJar(type: Jar) {
+    archiveFileName = project.name + '.jar'
+    from sourceSets.main.output
+    dependsOn configurations.runtimeClasspath
     manifest {
         attributes 'Implementation-Title': rootProject.name,
                 'Implementation-Version': project.version,
                 'Main-Class': mainClassName
     }
-    project.archivesBaseName = project.name + '-all'
-    from { configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
-    with jar
+    from {
+        configurations.runtimeClasspath.findAll { it.name.endsWith('jar') }.collect { zipTree(it) }
+    }
+}
+
+distributions {
+    main {
+        contents {
+            from fatJar
+            into('tasks') { from('../tasks') }
+            into('xsd') { from('../xsd') }
+        }
+    }
 }
