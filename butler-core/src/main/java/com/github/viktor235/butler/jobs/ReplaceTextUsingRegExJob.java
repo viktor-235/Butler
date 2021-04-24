@@ -10,24 +10,36 @@ import java.util.regex.Pattern;
 public class ReplaceTextUsingRegExJob implements JobEntity {
     private final String contextFrom;
     private final String contextTo;
-    private final Pattern pattern;
-    private final String substitution;
+    private final String substitutionValue;
+    private final String substitutionContextFrom;
+    private final String regexValue;
+    private final String regexContextFrom;
+    private final int flags;
 
     public ReplaceTextUsingRegExJob(ReplaceTextUsingRegEx conf) {
-        this(conf.getContextFrom(), conf.getContextTo(), conf.getRegEx(), conf.getSubstitution(), getFlags(conf.getFlags()));
+        this(conf.getContextFrom(), conf.getContextTo(),
+                conf.getRegEx().getValue(), conf.getRegEx().getContextFrom(),
+                conf.getSubstitution().getValue(), conf.getSubstitution().getContextFrom(),
+                getFlags(conf.getFlags()));
     }
 
-    public ReplaceTextUsingRegExJob(String contextFrom, String contextTo, String regex, String substitution, int flags) {
+    public ReplaceTextUsingRegExJob(String contextFrom, String contextTo,
+                                    String regexValue, String regexContextFrom,
+                                    String substitutionValue, String substitutionContextFrom,
+                                    int flags) {
         this.contextFrom = contextFrom;
         this.contextTo = contextTo;
-        pattern = Pattern.compile(regex, flags);
-        this.substitution = substitution;
+        this.regexValue = regexValue;
+        this.regexContextFrom = regexContextFrom;
+        this.substitutionValue = substitutionValue;
+        this.substitutionContextFrom = substitutionContextFrom;
+        this.flags = flags;
     }
 
     @Override
     public void process(Context c, Informer info) throws AppException {
         String text = c.get(contextFrom);
-        text = doJob(text);
+        text = doJob(text, c);
         c.put(contextTo, text);
     }
 
@@ -46,9 +58,12 @@ public class ReplaceTextUsingRegExJob implements JobEntity {
         return result;
     }
 
-    public String doJob(String text) throws AppException {
+    public String doJob(String text, Context c) throws AppException {
         if (text == null)
             throw new AppException("Text is null");
+        String regex = regexValue != null ? regexValue : c.get(regexContextFrom);
+        String substitution = substitutionValue != null ? substitutionValue : c.get(substitutionContextFrom);
+        Pattern pattern = Pattern.compile(regex, flags);
         return pattern.matcher(text).replaceAll(substitution);
     }
 }

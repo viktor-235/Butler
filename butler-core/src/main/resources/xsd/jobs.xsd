@@ -35,8 +35,24 @@
                             <xsd:attribute name="unicodeCharacterClass" type="xsd:boolean" default="false"/>
                         </xsd:complexType>
                     </xsd:element>
-                    <xsd:element name="regEx" type="xsd:string"/>
-                    <xsd:element name="substitution" type="xsd:string"/>
+                    <xsd:element name="regEx">
+                        <xsd:complexType>
+                            <xsd:simpleContent>
+                                <xsd:extension base="xsd:string">
+                                    <xsd:attribute name="contextFrom" type="xsd:string"/>
+                                </xsd:extension>
+                            </xsd:simpleContent>
+                        </xsd:complexType>
+                    </xsd:element>
+                    <xsd:element name="substitution">
+                        <xsd:complexType>
+                            <xsd:simpleContent>
+                                <xsd:extension base="xsd:string">
+                                    <xsd:attribute name="contextFrom" type="xsd:string"/>
+                                </xsd:extension>
+                            </xsd:simpleContent>
+                        </xsd:complexType>
+                    </xsd:element>
                 </xsd:sequence>
                 <xsd:attribute name="contextFrom" type="xsd:string" default="TEXT"/>
                 <xsd:attribute name="contextTo" type="xsd:string" default="TEXT"/>
