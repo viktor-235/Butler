@@ -36,7 +36,7 @@ jobs:
 
     - name: List Files
       run: |
-        ls
+        ls butler-cli
 
     - name: Release
       uses: softprops/action-gh-release@v1
