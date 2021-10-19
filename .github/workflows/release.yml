@@ -34,6 +34,10 @@ jobs:
         version-file: gradle.properties
         version-file-extraction-pattern: '(?<=release_version=).+'
 
+    - name: List Files
+      run: |
+        ls butler-cli/build/distributions
+
     - name: Release
       uses: softprops/action-gh-release@v1
       with:
