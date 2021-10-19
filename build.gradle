@@ -1,5 +1,5 @@
 group 'com.github.viktor235'
-version '1.0-SNAPSHOT'
+version release_version
 
 subprojects {
     apply plugin: "java-library"
